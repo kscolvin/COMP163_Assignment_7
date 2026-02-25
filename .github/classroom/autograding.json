@@ -1,0 +1,24 @@
+{
+  "tests": [
+    { "name": "Code Lowercase",                  "setup": "pip install pytest", "run": "python -m pytest test_assignment.py::test_code_lowercase -v",                       "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Code Mixedcase",                  "setup": "", "run": "python -m pytest test_assignment.py::test_code_mixedcase -v",                      "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Title Lowercase",                 "setup": "", "run": "python -m pytest test_assignment.py::test_title_lowercase -v",                     "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Title Uppercase",                 "setup": "", "run": "python -m pytest test_assignment.py::test_title_uppercase -v",                     "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Room Lowercase",                  "setup": "", "run": "python -m pytest test_assignment.py::test_room_lowercase -v",                      "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Room Multiword",                  "setup": "", "run": "python -m pytest test_assignment.py::test_room_multiword -v",                      "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Days MW",                         "setup": "", "run": "python -m pytest test_assignment.py::test_days_mw -v",                             "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 3 },
+    { "name": "Days TR",                         "setup": "", "run": "python -m pytest test_assignment.py::test_days_tr -v",                             "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 3 },
+    { "name": "Days MWF",                        "setup": "", "run": "python -m pytest test_assignment.py::test_days_mwf -v",                            "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 3 },
+    { "name": "Days Single",                     "setup": "", "run": "python -m pytest test_assignment.py::test_days_single -v",                         "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 3 },
+    { "name": "Time Lowercase AM",               "setup": "", "run": "python -m pytest test_assignment.py::test_time_lowercase_am -v",                   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Time Uppercase AM",               "setup": "", "run": "python -m pytest test_assignment.py::test_time_uppercase_am -v",                   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Time Lowercase PM",               "setup": "", "run": "python -m pytest test_assignment.py::test_time_lowercase_pm -v",                   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Time Uppercase PM",               "setup": "", "run": "python -m pytest test_assignment.py::test_time_uppercase_pm -v",                   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 2 },
+    { "name": "Conflict Same Days Same Time",    "setup": "", "run": "python -m pytest test_assignment.py::test_conflict_same_days_same_time -v",        "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Conflict Same Days Diff Time",    "setup": "", "run": "python -m pytest test_assignment.py::test_conflict_same_days_different_time -v",   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Conflict Diff Days Same Time",    "setup": "", "run": "python -m pytest test_assignment.py::test_conflict_different_days_same_time -v",   "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Conflict Partial Day Overlap",    "setup": "", "run": "python -m pytest test_assignment.py::test_conflict_partial_day_overlap -v",        "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Formatted Single Course",         "setup": "", "run": "python -m pytest test_assignment.py::test_formatted_single_course -v",             "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 },
+    { "name": "Formatted Multiword Fields",      "setup": "", "run": "python -m pytest test_assignment.py::test_formatted_multiword_fields -v",          "input": "", "output": "", "comparison": "included", "timeout": 10, "points": 4 }
+  ]
+}

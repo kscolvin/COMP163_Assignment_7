@@ -1,0 +1,257 @@
+name: GitHub Classroom Workflow
+
+on: [push]
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install pytest
+        run: pip install pytest
+
+      # Step 1 — Course Code Formatting
+      - name: Test - Code Lowercase
+        id: test_code_lowercase
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Code Lowercase
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_code_lowercase -v
+          timeout: 10
+          max-score: 4
+
+      - name: Test - Code Mixedcase
+        id: test_code_mixedcase
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Code Mixedcase
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_code_mixedcase -v
+          timeout: 10
+          max-score: 4
+
+      # Step 2 — Title and Room Formatting
+      - name: Test - Title Lowercase
+        id: test_title_lowercase
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Title Lowercase
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_title_lowercase -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Title Uppercase
+        id: test_title_uppercase
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Title Uppercase
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_title_uppercase -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Room Lowercase
+        id: test_room_lowercase
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Room Lowercase
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_room_lowercase -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Room Multiword
+        id: test_room_multiword
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Room Multiword
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_room_multiword -v
+          timeout: 10
+          max-score: 2
+
+      # Step 3 — Day Code Expansion
+      - name: Test - Days MW
+        id: test_days_mw
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Days MW
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_days_mw -v
+          timeout: 10
+          max-score: 3
+
+      - name: Test - Days TR
+        id: test_days_tr
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Days TR
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_days_tr -v
+          timeout: 10
+          max-score: 3
+
+      - name: Test - Days MWF
+        id: test_days_mwf
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Days MWF
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_days_mwf -v
+          timeout: 10
+          max-score: 3
+
+      - name: Test - Days Single
+        id: test_days_single
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Days Single
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_days_single -v
+          timeout: 10
+          max-score: 3
+
+      # Step 4 — Time Standardization
+      - name: Test - Time Lowercase AM
+        id: test_time_lowercase_am
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Time Lowercase AM
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_time_lowercase_am -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Time Uppercase AM
+        id: test_time_uppercase_am
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Time Uppercase AM
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_time_uppercase_am -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Time Lowercase PM
+        id: test_time_lowercase_pm
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Time Lowercase PM
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_time_lowercase_pm -v
+          timeout: 10
+          max-score: 2
+
+      - name: Test - Time Uppercase PM
+        id: test_time_uppercase_pm
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Time Uppercase PM
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_time_uppercase_pm -v
+          timeout: 10
+          max-score: 2
+
+      # Step 5 — Conflict Detection
+      - name: Test - Conflict Same Days Same Time
+        id: test_conflict_same_days_same_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Conflict Same Days Same Time
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_conflict_same_days_same_time -v
+          timeout: 10
+          max-score: 4
+
+      - name: Test - Conflict Same Days Different Time
+        id: test_conflict_same_days_different_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Conflict Same Days Different Time
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_conflict_same_days_different_time -v
+          timeout: 10
+          max-score: 4
+
+      - name: Test - Conflict Different Days Same Time
+        id: test_conflict_different_days_same_time
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Conflict Different Days Same Time
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_conflict_different_days_same_time -v
+          timeout: 10
+          max-score: 4
+
+      - name: Test - Conflict Partial Day Overlap
+        id: test_conflict_partial_day_overlap
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Conflict Partial Day Overlap
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_conflict_partial_day_overlap -v
+          timeout: 10
+          max-score: 4
+
+      # Step 6 — Formatted Printing
+      - name: Test - Formatted Single Course
+        id: test_formatted_single_course
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Formatted Single Course
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_formatted_single_course -v
+          timeout: 10
+          max-score: 4
+
+      - name: Test - Formatted Multiword Fields
+        id: test_formatted_multiword_fields
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Formatted Multiword Fields
+          setup-command: ''
+          command: python -m pytest test_assignment.py::test_formatted_multiword_fields -v
+          timeout: 10
+          max-score: 4
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TEST_CODE_LOWERCASE_RESULTS:               "${{steps.test_code_lowercase.outputs.result}}"
+          TEST_CODE_MIXEDCASE_RESULTS:               "${{steps.test_code_mixedcase.outputs.result}}"
+          TEST_TITLE_LOWERCASE_RESULTS:              "${{steps.test_title_lowercase.outputs.result}}"
+          TEST_TITLE_UPPERCASE_RESULTS:              "${{steps.test_title_uppercase.outputs.result}}"
+          TEST_ROOM_LOWERCASE_RESULTS:               "${{steps.test_room_lowercase.outputs.result}}"
+          TEST_ROOM_MULTIWORD_RESULTS:               "${{steps.test_room_multiword.outputs.result}}"
+          TEST_DAYS_MW_RESULTS:                      "${{steps.test_days_mw.outputs.result}}"
+          TEST_DAYS_TR_RESULTS:                      "${{steps.test_days_tr.outputs.result}}"
+          TEST_DAYS_MWF_RESULTS:                     "${{steps.test_days_mwf.outputs.result}}"
+          TEST_DAYS_SINGLE_RESULTS:                  "${{steps.test_days_single.outputs.result}}"
+          TEST_TIME_LOWERCASE_AM_RESULTS:            "${{steps.test_time_lowercase_am.outputs.result}}"
+          TEST_TIME_UPPERCASE_AM_RESULTS:            "${{steps.test_time_uppercase_am.outputs.result}}"
+          TEST_TIME_LOWERCASE_PM_RESULTS:            "${{steps.test_time_lowercase_pm.outputs.result}}"
+          TEST_TIME_UPPERCASE_PM_RESULTS:            "${{steps.test_time_uppercase_pm.outputs.result}}"
+          TEST_CONFLICT_SAME_DAYS_SAME_TIME_RESULTS: "${{steps.test_conflict_same_days_same_time.outputs.result}}"
+          TEST_CONFLICT_SAME_DAYS_DIFFERENT_TIME_RESULTS: "${{steps.test_conflict_same_days_different_time.outputs.result}}"
+          TEST_CONFLICT_DIFFERENT_DAYS_SAME_TIME_RESULTS: "${{steps.test_conflict_different_days_same_time.outputs.result}}"
+          TEST_CONFLICT_PARTIAL_DAY_OVERLAP_RESULTS: "${{steps.test_conflict_partial_day_overlap.outputs.result}}"
+          TEST_FORMATTED_SINGLE_COURSE_RESULTS:      "${{steps.test_formatted_single_course.outputs.result}}"
+          TEST_FORMATTED_MULTIWORD_FIELDS_RESULTS:   "${{steps.test_formatted_multiword_fields.outputs.result}}"
+        with:
+          runners: test_code_lowercase,test_code_mixedcase,test_title_lowercase,test_title_uppercase,test_room_lowercase,test_room_multiword,test_days_mw,test_days_tr,test_days_mwf,test_days_single,test_time_lowercase_am,test_time_uppercase_am,test_time_lowercase_pm,test_time_uppercase_pm,test_conflict_same_days_same_time,test_conflict_same_days_different_time,test_conflict_different_days_same_time,test_conflict_partial_day_overlap,test_formatted_single_course,test_formatted_multiword_fields
