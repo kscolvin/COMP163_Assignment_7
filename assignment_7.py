@@ -22,16 +22,17 @@ courses = []
 
 while True:
     line = input("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ").strip()  # Read input line and remove leading/trailing whitespace
-    if line.upper() == "DONE":
+    if line.strip().upper() == "DONE":
         break  # Exit the loop if the user is done entering data
     
     fields = line.split("|")                                                                        # Split the input line 
     if len(fields) != 5:
         continue                                                                                    # Skip invalid input lines
-    
+
 # --- Data Extraction & Cleaning ---
 
-    course_code = fields[0].strip().upper()                                                         # Extract and clean course code
+    raw_input = fields[0].strip().upper()                                                           # Extract and clean course code
+    course_code = "".join(raw_input.split())                                                        # Remove any whitespace from the course code
     course_title = fields[1].strip().title()                                                        # Extract and clean course title
 
     day_code = fields[2].strip().upper()                                                            # Extract and clean day code
@@ -69,7 +70,7 @@ for i, c in enumerate(courses, 1):
     print(f"  Title: {c['title']}")  # Print course title
     print(f"  Days: {c['days_str']}")  # Print full day
     print(f"  Time: {c['time']}")  # Print time
-    print(f"  Room: {c['room']}")  # Print room name
+    print(f"  Room: {c['room']}\n")  # Print room name
 
 print("\n=== SCHEDULE SUMMARY ===")  # Header for the schedule summary
 print(f"Total Courses: {len(courses)}\n")  # Print total number of courses
