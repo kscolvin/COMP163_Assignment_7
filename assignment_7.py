@@ -1,11 +1,11 @@
 """
 COMP 163 - Introduction to Programming
 Assignment: Chapter 7 - Course Schedule Formatter
-Name: [Your Full Name]
-GitHub Username: [Your Username]
-Date: [Submission Date]
-Description: [What your program does]
-AI Usage: [Describe any AI assistance OR write "None"]
+Name: Kennedi Colvin
+GitHub Username: Kscolvin
+Date: 02/26/2026
+Description: This program takes a list of course schedules in a specific format and processes them to produce a more readable and standardized output.
+AI Usage: I used AI to assist with breaking down the problem into manageable steps and providing guidance on how to implement each step. 
 """
 
 # ============================================================
