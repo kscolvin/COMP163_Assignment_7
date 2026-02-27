@@ -24,7 +24,7 @@ while True:
     fields = [f.strip() for f in user_input.split("|")]  # Split the input into fields based on the '|' delimiter
 
     if len(fields) != 5:  # Validate that there are exactly 5 fields
-        raw_code = fields[0].strip().upper() if len(fields) > 0 else "N/A"  # Extract course code for error message
+        raw_code = fields[0].upper()
         clean_code = "".join(raw_code.split())  # Remove spaces from the course code for error message
 
         course_entry = {
