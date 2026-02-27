@@ -92,6 +92,7 @@ courses.append({
 # Step 5: Conflict Detection
 
 conflicts = []
+
 for i in range(len(courses)):
     for j in range(i + 1, len(courses)):
         c1 = courses[i]
@@ -99,16 +100,17 @@ for i in range(len(courses)):
         
         shared_days = [d for d in "mtwrf" if d in c1['days'] and d in c2['days']]  # Check for shared days
 
-        if c1['time'] == c2['time'] and shared_days:  # Check for time conflict on shared days
-            day_names = [day_input[d] for d in shared_days]  # Get full day names for the conflict
+        if c1['time'] == c2['time'] and shared_days:                        # Check for time conflict on shared days
+            day_names = [day_input[d] for d in shared_days]                 # Get full day names for the conflict
             days_out = ",".join(day_names)  
             conflicts.append(f"{c1['code']} and {c2['code']} conflict on {days_out} at {c1['time']}")  # Record the conflict
 
         if not conflicts:
-            print("No conflicts detected.")  # Print if no conflicts are found
+            print("No conflicts detected.")                                 # Print if no conflicts are found
         else:
             for conflict in conflicts:
-                print(conflict)  # Print each detected conflict
+                print(conflict)                                             # Print each detected conflict
+
 
 # ============================================================
 
