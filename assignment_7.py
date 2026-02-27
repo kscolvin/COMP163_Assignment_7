@@ -12,56 +12,112 @@ AI Usage: I used AI to assist with breaking down the problem into manageable ste
 # Step 1: Input Parsing & Course Code Formatting
 
 # --- Setup ---
-
-day_setup = {"M": "Monday", "T": "Tuesday", "W": "Wednesday", "R": "Thursday", "F": "Friday"} # Dictionary to map day codes to full names
-day_abbr = {"M": "Mon", "T": "Tue", "W": "Wed", "R": "Thu", "F": "Fri"} # Dictionary to map day codes to abbreviations
-
-# --- Data Collection ---
-
 courses = []
 
+print("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ")  # Prompt the user for input
+
 while True:
-    line = input("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ").strip()  # Read input line and remove leading/trailing whitespace
+    line = input()                                      # Read a line of input from the user
     if line.strip().upper() == "DONE":
-        break  # Exit the loop if the user is done entering data
+        break                                           # Exit the loop if the user is done entering data
     
-    fields = line.split("|")                                                                        # Split the input line 
+    fields = line.split("|")                            # Split the input line 
     if len(fields) != 5:
-        continue                                                                                    # Skip invalid input lines
-
-# --- Data Extraction & Cleaning ---
-
-    raw_code = fields[0].strip().upper()                                                           # Extract and clean course code
-    course_code = "".join(raw_code.split())                                                        # Remove any whitespace from the course code
+        continue                                        # Skip invalid input lines
     
-    course_title = fields[1].strip().title()                                                        # Extract and clean course title
+# ============================================================
 
-    day_code = fields[2].strip().upper()                                                            # Extract and clean day code
-    full_day_list = [day_setup[char] for char in day_code if char in day_setup]                     # Create a list of full day names based on the day code
-    abbr_day_list = [day_abbr[char] for char in day_code if char in day_abbr]                       # Create a list of abbreviated day names based on the day code
 
-    joined_full_days = "/ ".join(full_day_list)                                                     # Join the full day names with a separator
-    joined_abbr_days = "/ ".join(abbr_day_list)                                                     # Join the abbreviated day names with a separator
+# ============================================================
+# Step 2: Title and Room Formatting
 
-    time_raw = fields[3].strip().lower().replace(" ", "")                                           # Extract and clean time input
-    time_input = time_raw.replace("am", " AM").replace("pm", " PM").upper()                         # Extract and clean time input, standardize to uppercase for AM/PM
-    
-    room_name = fields[4].strip().title()                                                           # Extract and clean room name
+code = fields[0].strip().upper()                                                                # Extract and clean course code
+title = fields[1].strip().title()                                                               # Extract and clean course title
+days_raw = fields[2].strip().upper()                                                            # Extract and clean day code
+time_raw = fields[3].strip().lower().replace(" ", "")                                           # Extract
+room = fields[4].strip().title()                                                                # Extract and clean room name
 
-    courses.append({
-        "code": course_code, 
-        "title": course_title, 
-        "days": full_day_list, 
-        "days_str": joined_full_days, 
-        "days_abbr": joined_abbr_days, 
-        "time": time_input, 
-        "room": room_name
-        })                                                                                          # Store the processed course information in a list
+code = code.upper().replace(" ", "")                                                            # Ensure course code is uppercase and has no spaces
+title = title.title()                                                                           # Ensure course title is in title case
+room = room.title()                                                                             # Ensure room name is in title case
 
-# --- Output ---
+# ============================================================
+
+
+# ============================================================
+# Step 3: Day Code Expansion
+
+day_input = {
+    "M": "Monday",
+    "T": "Tuesday",
+    "W": "Wednesday",
+    "R": "Thursday",
+    "F": "Friday"
+}
+
+day_abbr = {
+    "M": "Mon",
+    "T": "Tue",
+    "W": "Wed",
+    "R": "Thu",
+    "F": "Fri"
+}
+
+full_days_str = "/".join(full_day_list)                        # Create a list of full day names based on the day code
+abbr_days_str = "/ ".join(abbr_day_list)                       # Create a list of abbreviated day names based on the day code
+
+# ============================================================
+
+
+# ============================================================
+# Step 4: Time Standardization
+
+time_clean = time_raw.replace("am", " AM").replace("pm", " PM").upper()  # Standardize time input to uppercase for AM/PM
+room_name = fields[4].strip().title()                                    # Extract and clean room name
+
+courses.append({
+    "code": code,
+    "title": title,
+    "days": full_day_list,
+    "days_str": full_days_str,
+    "days_abbr": abbr_days_str,
+    "time": time_clean,
+    "room": room_name
+})                                                                      # Append the processed course information to the course list
+
+# ============================================================
+
+
+# ============================================================
+# Step 5: Conflict Detection
+
+conflicts = []
+for i in range(len(courses)):
+    for j in range(i + 1, len(courses)):
+        c1 = courses[i]
+        c2 = courses[j]
+        
+        shared_days = [d for d in "mtwrf" if d in c1['days'] and d in c2['days']]  # Check for shared days
+
+        if c1['time'] == c2['time'] and shared_days:  # Check for time conflict on shared days
+            day_names = [day_input[d] for d in shared_days]  # Get full day names for the conflict
+            days_out = ",".join(day_names)  
+            conflicts.append(f"{c1['code']} and {c2['code']} conflict on {days_out} at {c1['time']}")  # Record the conflict
+
+        if not conflicts:
+            print("No conflicts detected.")  # Print if no conflicts are found
+        else:
+            for conflict in conflicts:
+                print(conflict)  # Print each detected conflict
+
+# ============================================================
+
+
+# ============================================================
+# Step 6: Full Output & Formatted Printing
 
 print("\n=== AGGIE COURSE SCHEDULE ===")  # Header for the course schedule
-for i, c in enumerate(courses, 1):
+for i, c in enumerate(course, 1):
     print(f"COURSE {i}:")
     print(f"  Code: {c['code']}")           # Print course code
     print(f"  Title: {c['title']}")         # Print course title
@@ -73,48 +129,9 @@ print("=== SCHEDULE SUMMARY ===")  # Header for the schedule summary
 print(f"Total Courses: {len(courses)}\n")  # Print total number of courses
 
 print("=== CONFLICTS REPORT ===")  # Header for conflicts
-conflicts_found = False
-for i in range(len(courses)):
-    for j in range(i + 1, len(courses)):
-        c1 = courses[i]
-        c2 = courses[j]
-        shared = [d for d in c1['days'] if d in c2['days']]  # Check for shared days
-
-        if shared and c1['time'] == c2['time']:
-            conflicts_found = True
-            day_string = ", ".join(shared)  # Join shared days into a string
-            print(f"{c1['code']} and {c2['code']} conflict on {day_string} at {c1['time']}")  # Print the conflict
-            
-        if not conflicts_found:
-            print("No conflicts detected.")  # Print if no conflicts are found
 
 print("\n=== FORMATTED FOR PRINTING ===")  # Footer for the schedule
 for c in courses:
-    print(f"{c['code']:<10} {c['title']:<25} {c['days_abbr']:<20} at {c['time']:<10} in {c['room']}")  # Print formatted course information
+    print(f"{c['code']:<12} {c['title']:<20} {c['days_abbr']:<25} at {c['time']:<10} in {c['room']}")  # Print formatted course information
 
-# ============================================================
-
-
-# ============================================================
-# Step 2: Title and Room Formatting
-# ============================================================
-
-
-# ============================================================
-# Step 3: Day Code Expansion
-# ============================================================
-
-
-# ============================================================
-# Step 4: Time Standardization
-# ============================================================
-
-
-# ============================================================
-# Step 5: Conflict Detection
-# ============================================================
-
-
-# ============================================================
-# Step 6: Full Output & Formatted Printing
 # ============================================================
