@@ -118,21 +118,22 @@ for i in range(len(courses)):
 # ============================================================
 # Step 6: Full Output & Formatted Printing
 
-print("\n=== AGGIE COURSE SCHEDULE ===")  # Header for the course schedule
-for i, c in enumerate(course, 1):
+print("\n=== AGGIE COURSE SCHEDULE ===")                                    # Header for the course schedule
+
+for i, c in enumerate(courses, 1):
     print(f"COURSE {i}:")
-    print(f"  Code: {c['code']}")           # Print course code
-    print(f"  Title: {c['title']}")         # Print course title
-    print(f"  Days: {c['days_str']}")       # Print full day
-    print(f"  Time: {c['time']}")           # Print time
-    print(f"  Room: {c['room']}\n")         # Print room name
+    print(f"  Code: {c['code']}")                                           # Print course code
+    print(f"  Title: {c['title']}")                                         # Print course title
+    print(f"  Days: {c['days_str']}")                                       # Print full day
+    print(f"  Time: {c['time']}")                                           # Print time
+    print(f"  Room: {c['room']}\n")                                         # Print room name
 
-print("=== SCHEDULE SUMMARY ===")  # Header for the schedule summary
-print(f"Total Courses: {len(courses)}\n")  # Print total number of courses
+print("=== SCHEDULE SUMMARY ===")                                           # Header for the schedule summary
+print(f"Total Courses: {len(courses)}\n")                                   # Print total number of courses
 
-print("=== CONFLICTS REPORT ===")  # Header for conflicts
+print("=== CONFLICTS REPORT ===")                                           # Header for conflicts
 
-print("\n=== FORMATTED FOR PRINTING ===")  # Footer for the schedule
+print("\n=== FORMATTED FOR PRINTING ===")                                   # Footer for the schedule
 for c in courses:
     print(f"{c['code']:<12} {c['title']:<20} {c['days_abbr']:<25} at {c['time']:<10} in {c['room']}")  # Print formatted course information
 
