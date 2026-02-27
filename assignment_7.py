@@ -15,20 +15,19 @@ AI Usage: I used AI to assist with breaking down the problem into manageable ste
 
 from operator import index
 
+def main():
+    courses = []
 
-courses = []
-
-print("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ")  # Prompt the user for input
+day_map_full = {'m': 'Monday', 't': 'Tuesday', 'w': 'Wednesday', 'r': 'Thursday', 'f': 'Friday'}
+day_map_short = {'m': 'Mon', 't': 'Tue', 'w': 'Wed', 'r': 'Thu', 'f': 'Fri'}
 
 while True:
-    user_input = input()  # Read user input
-    
+    user_input = input("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ")  # Read user input
     if user_input.strip().upper() == "DONE":  # Check for termination condition
         break
 
     fields = user_input.split("|")
     if len(fields) != 5:
-        print("Invalid input format. Please enter data in the format: code|title|days|time|room")
         continue  # Skip to the next iteration if the input format is incorrect
 
     code = fields[0].strip().upper()  # Extract and clean course code
@@ -56,25 +55,12 @@ clean_room = raw_room.title()  # Convert room to title case for standardization
 # ============================================================
 # Step 3: Day Code Expansion
 
-day_input = {
-    "m": ("Monday", "Mon"),
-    "t": ("Tuesday", "Tue"),
-    "w": ("Wednesday", "Wed"),
-    "r": ("Thursday", "Thu"),
-    "f": ("Friday", "Fri")
-}
-
-full_days_list = []
-short_days_list = []
-
-for char in raw_days:
-    if char in day_input:
-        full_day, short_day = day_input[char]  # Get the full and short names for the day code
-        full_days_list.append(full_day)  # Expand day codes to full names
-        short_days_list.append(short_day)  # Get abbreviated day names
-
-display_days_string = "/".join(full_days_list)  # Create a string of full day names separated by slashes
-print_days = "/".join(short_days_list)  # Create a string of abbreviated day names separated by slashes
+full_days = [day_map_full[d] for d in raw_days if d in day_map_full]
+short_days = [day_map_short[d] for d in raw_days if d in day_map_short]
+        
+display_days = "/".join(full_days)  # Create a string of full day names separated by slashes
+display_days_string = display_days  # Store the full day names string for later use
+print_days = "/".join(short_days)
 
 # ============================================================
 
@@ -82,29 +68,18 @@ print_days = "/".join(short_days_list)  # Create a string of abbreviated day nam
 # ============================================================
 # Step 4: Time Standardization
 
-time_temp = raw_time.lower().replace(" ", "")  # Convert time to lowercase for easier processing
+time_val = raw_time.replace(" ", "").replace("AM", " AM").replace("PM", " PM")
+clean_time = time_val.strip()
 
-if "am" in time_temp:
-        period = "AM"
-        time_digits = time_temp.replace("am", "").strip()  # Remove am and clean up
-elif "pm" in time_temp:
-        period = "PM"
-        time_digits = time_temp.replace("pm", "").strip()  # Remove pm and clean
-else:
-    time_digits = time_temp
-
-clean_time = f"{time_digits} {period}".strip()  # Format time in standard format
-
-
-course_data = {
-    "code": clean_code,
-    "title": clean_title,
-    "days_string": display_days_string,
-    "days_full": full_days_list,
-    "time": format_time,
-    "room": clean_room
-}
-courses.append(course_data)  # Add the processed course data to the courses list
+courses.append({
+            "code": clean_code,
+            "title": clean_title,
+            "days_list": full_days,
+            "display_days": display_days,
+            "print_days": print_days,
+            "time": clean_time,
+            "room": clean_room
+        })
 
 # ============================================================
 
