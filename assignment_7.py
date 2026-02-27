@@ -17,14 +17,27 @@ courses = []
 print("Enter course data (format: code|title|days|time|room): write 'DONE' to finish: ")  # Prompt the user for input
 
 while True:
-    line = input()                                      # Read a line of input from the user
-    if line.strip().upper() == "DONE":
-        break                                           # Exit the loop if the user is done entering data
-    
-    fields = line.split("|")                            # Split the input line 
-    if len(fields) != 5:
-        continue                                        # Skip invalid input lines
-    
+    user_input = input()  # Read user input
+    if user_input.strip().upper() == "DONE":  # Check for termination condition
+        break
+
+    fields = [f.strip() for f in user_input.split("|")]  # Split the input into fields based on the '|' delimiter
+
+    if len(fields) != 5:  # Validate that there are exactly 5 fields
+        raw_code = fields[0].strip().upper() if len(fields) > 0 else "N/A"  # Extract course code for error message
+        clean_code = "".join(raw_code.split())  # Remove spaces from the course code for error message
+
+        course_entry = {
+            "code": clean_code,
+            "title": fields[1],
+            "days": fields[2],
+            "time": fields[3],
+            "room": fields[4],
+        }
+        courses.append(course_entry)
+        
+        print(f"Code: {clean_code}")  # Print the cleaned course code for debugging
+
 # ============================================================
 
 
@@ -46,22 +59,6 @@ room = room.title()                                                             
 
 # ============================================================
 # Step 3: Day Code Expansion
-
-day_input = {
-    "M": "Monday",
-    "T": "Tuesday",
-    "W": "Wednesday",
-    "R": "Thursday",
-    "F": "Friday"
-}
-
-day_abbr = {
-    "M": "Mon",
-    "T": "Tue",
-    "W": "Wed",
-    "R": "Thu",
-    "F": "Fri"
-}
 
 full_days_str = "/".join(full_day_list)                        # Create a list of full day names based on the day code
 abbr_days_str = "/ ".join(abbr_day_list)                       # Create a list of abbreviated day names based on the day code
@@ -135,6 +132,6 @@ print("=== CONFLICTS REPORT ===")                                           # He
 
 print("\n=== FORMATTED FOR PRINTING ===")                                   # Footer for the schedule
 for c in courses:
-    print(f"{c['code']:<12} {c['title']:<20} {c['days_abbr']:<25} at {c['time']:<10} in {c['room']}")  # Print formatted course information
+    print(f"{c['code'].upper():<12} {c['title'].title():<20} {c['days_abbr']:<25} at {c['time']:<10} in {c['room']}")  # Print formatted course information
 
 # ============================================================
