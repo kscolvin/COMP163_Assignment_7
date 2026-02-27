@@ -31,48 +31,45 @@ while True:
 
 # --- Data Extraction & Cleaning ---
 
-    raw_input = fields[0].strip().upper()                                                           # Extract and clean course code
-    course_code = "".join(raw_input.split())                                                        # Remove any whitespace from the course code
+    raw_code = fields[0].strip().upper()                                                           # Extract and clean course code
+    course_code = "".join(raw_code.split())                                                        # Remove any whitespace from the course code
+    
     course_title = fields[1].strip().title()                                                        # Extract and clean course title
 
     day_code = fields[2].strip().upper()                                                            # Extract and clean day code
-    time_input = fields[3].strip().upper().lower().replace("am", "AM").replace("pm", "PM")          # Extract and clean time input, standardize to uppercase for AM/PM
-    room_name = {fields[4].strip().title()}                                                         # Extract and clean room name
-
     full_day_list = [day_setup[char] for char in day_code if char in day_setup]                     # Create a list of full day names based on the day code
     abbr_day_list = [day_abbr[char] for char in day_code if char in day_abbr]                       # Create a list of abbreviated day names based on the day code
 
     joined_full_days = "/ ".join(full_day_list)                                                     # Join the full day names with a separator
     joined_abbr_days = "/ ".join(abbr_day_list)                                                     # Join the abbreviated day names with a separator
 
-    courses.append({"code": course_code, "title": course_title, "days": full_day_list, "days_str": joined_full_days, "days_abbr": joined_abbr_days, "time": time_input, "room": fields[4].strip().title()})    # Store the processed course information in a list
+    time_raw = fields[3].strip().lower().replace(" ", "")                                           # Extract and clean time input
+    time_input = time_raw.replace("am", " AM").replace("pm", " PM").upper()                         # Extract and clean time input, standardize to uppercase for AM/PM
+    
+    room_name = fields[4].strip().title()                                                           # Extract and clean room name
 
-
-# --- Conflict Detection ---
-
-    conflict = []                                                                                   # List to keep track of any scheduling conflicts
-
-    for i in range(len(courses)):
-        for j in range(i + 1, len(courses)):
-            c1 = courses[i]
-            c2 = courses[j]
-
-            shared_days = [d for d in c1['days'] if d in c2['days']]                                            # Check for shared days
-            if shared_days and c1['time'] == c2['time']:  
-                conflict.append(f"{c1['code']} and {c2['code']} conflict on {shared_days[0]} at {c1['time']}")  # Record the conflict
+    courses.append({
+        "code": course_code, 
+        "title": course_title, 
+        "days": full_day_list, 
+        "days_str": joined_full_days, 
+        "days_abbr": joined_abbr_days, 
+        "time": time_input, 
+        "room": room_name
+        })                                                                                          # Store the processed course information in a list
 
 # --- Output ---
 
 print("\n=== AGGIE COURSE SCHEDULE ===")  # Header for the course schedule
 for i, c in enumerate(courses, 1):
     print(f"COURSE {i}:")
-    print(f"  Code: {c['code']}")  # Print course code
-    print(f"  Title: {c['title']}")  # Print course title
-    print(f"  Days: {c['days_str']}")  # Print full day
-    print(f"  Time: {c['time']}")  # Print time
-    print(f"  Room: {c['room']}\n")  # Print room name
+    print(f"  Code: {c['code']}")           # Print course code
+    print(f"  Title: {c['title']}")         # Print course title
+    print(f"  Days: {c['days_str']}")       # Print full day
+    print(f"  Time: {c['time']}")           # Print time
+    print(f"  Room: {c['room']}\n")         # Print room name
 
-print("\n=== SCHEDULE SUMMARY ===")  # Header for the schedule summary
+print("=== SCHEDULE SUMMARY ===")  # Header for the schedule summary
 print(f"Total Courses: {len(courses)}\n")  # Print total number of courses
 
 print("=== CONFLICTS REPORT ===")  # Header for conflicts
@@ -81,12 +78,13 @@ for i in range(len(courses)):
     for j in range(i + 1, len(courses)):
         c1 = courses[i]
         c2 = courses[j]
-
         shared = [d for d in c1['days'] if d in c2['days']]  # Check for shared days
+
         if shared and c1['time'] == c2['time']:
             conflicts_found = True
-            day_string = "/ ".join(shared)  # Join shared days into a string
+            day_string = ", ".join(shared)  # Join shared days into a string
             print(f"{c1['code']} and {c2['code']} conflict on {day_string} at {c1['time']}")  # Print the conflict
+            
         if not conflicts_found:
             print("No conflicts detected.")  # Print if no conflicts are found
 
