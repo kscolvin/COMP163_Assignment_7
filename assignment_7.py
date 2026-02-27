@@ -135,4 +135,6 @@ print("\n=== FORMATTED FOR PRINTING ===")
 for c in courses:
      print(f"{c['code']:<10}{c['title']:<26} {c['days_string']:<13} {c['time']:<11} {c['room']}")
 
+if __name__ == "__main__":
+    main()
 # ============================================================
