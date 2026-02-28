@@ -29,7 +29,7 @@ while True:
     # Extract and clean fields using required string methods
     raw_code = fields[0].strip() 
     raw_title = fields[1].strip()
-    raw_days = fields[2].strip().lower() # Normalize to lowercase for mapping
+    raw_days = fields[2].strip().lower() # Normalize to lowercase
     raw_time = fields[3].strip()
     raw_room = fields[4].strip()
     
@@ -95,7 +95,7 @@ for i in range(len(courses)):
         c1 = courses[i]
         c2 = courses[j]
             
-        # Check if they share at least one day AND the same time
+        # Check if they share at least one day and time
         shared_days = set(c1["days_full"]).intersection(set(c2["days_full"]))
 
         if shared_days and c1["time"] == c2["time"]:

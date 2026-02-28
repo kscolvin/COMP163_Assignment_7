@@ -130,7 +130,7 @@ The days field requires you to process the string one character at a time rather
 than treating it as a whole. Why is that necessary? Could you have produced the
 same result with a single string method call instead of a loop? Explain your reasoning.
 
-*Your answer here.*
+A single string method usually just looks at the whole thing, which doesn't help when you need to translate specific letter into a real output. Using a loop is the only way to treat each string as its own important piece of data rather than just a random chunk of text.
 
 ---
 
@@ -141,7 +141,7 @@ How did you identify where one part ends and the other begins in your program?
 What would break in your solution if the input format changed — for example,
 if times were given as `9am` instead of `9:00am`?
 
-*Your answer here.*
+If the format suddenly changed from 9:00am to 9am, the whole thing would crash. Since the logic depends on that exact character to know where to cut, changing the number of digits means the split happens in the wrong place or doesn't happen at all.
 
 ---
 
@@ -152,7 +152,7 @@ all input has been collected. Why can't you check for conflicts as each course
 is entered, before the user types DONE? What data structure did you use to store
 the courses, and why was that a good choice for this comparison?
 
-*Your answer here.*
+I used lists to store everything because it keeps all the course objects in a neat. This was a good choice because it lets me run a loop allowing me to grab one course against other courses in a collection to see if any times clash.
 
 ---
 
@@ -162,10 +162,10 @@ What is the difference between *cleaning* data and *formatting* data?
 Give one specific example of each from your own program and explain
 why the distinction matters.
 
-*Your answer here.*
+I cleaned time inputs by stripping unneeded spaces, but I formatted the final output to always show standard two digit only minutes like 09:00. This distinction is crucial because you can't reliably format data until you've cleaned it first. Otherwise, you're just polishing stuff the program doesn't even need.
 
 ---
 
 ## AI Usage
 
-Describe any AI assistance you used, or write "None."
+I used AI to explain code multiple times. This chapter was a little harder for me and I made many mistakes that needed to be corrected. I made many errors that AI help me identify so that I was aware where I was making mistakes. 
